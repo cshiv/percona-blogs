@@ -25,8 +25,11 @@ spec:
           name: customresource-config-ksm
         name: cr-config      
       automountServiceAccountToken: true
-      containers:      
-      - image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.9.2
+      containers:   
+      - args:
+        - --metric-labels-allowlist=pods=[app.kubernetes.io/component,app.kubernetes.io/instance,app.kubernetes.io/managed-by,app.kubernetes.io/name,app.kubernetes.io/part-of],persistentvolumeclaims=[app.kubernetes.io/component,app.kubernetes.io/instance,app.kubernetes.io/managed-by,app.kubernetes.io/name,app.kubernetes.io/part-of],jobs=[app.kubernetes.io/component,app.kubernetes.io/instance,app.kubernetes.io/managed-by,app.kubernetes.io/name,app.kubernetes.io/part-of]
+        - --custom-resource-state-config-file=/go/src/k8s.io/kube-state-metrics/config
+        image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.9.2
         # Mount the ConfigMap at the path /go/src/k8s.io/kube-state-metrics/ in the container
         volumeMounts:
         - mountPath: /go/src/k8s.io/kube-state-metrics/
