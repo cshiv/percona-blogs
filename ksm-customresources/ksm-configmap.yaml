@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customresource-config-ksm
+data:
+  config: |
+    kind: CustomResourceStateMetrics
+    spec:
+      resources:
+        - groupVersionKind:
+            # Group as per the definition of CRD(https://github.com/percona/percona-xtradb-cluster-operator/blob/43636fba46ffc331326359c135894b3c3eb84d05/deploy/crd.yaml#L457)             
+            group: pxc.percona.com    
+            # Version served, Refer the CRD for the version served (https://github.com/percona/percona-xtradb-cluster-operator/blob/43636fba46ffc331326359c135894b3c3eb84d05/deploy/crd.yaml#L780)
+            # Alternatively use kubectl api-resoureces | grep <custom-resource-name>, which is kubectl api-resources | grep PerconaXtraDBCluster to get the serving version in this case
+            version: v1               
+            # Custom Resource Kind (https://github.com/percona/percona-xtradb-cluster-operator/blob/43636fba46ffc331326359c135894b3c3eb84d05/deploy/crd.yaml#L459)
+            kind: PerconaXtraDBCluster
+          metrics:
+            # Name in which metrics are captured
+            - name: kube_pxc_info
+              # Optional Description for human friendly message
+              help: "Information of PXC cluster on k8s"
+              each:
+                # Type of metric supported by kube state metrics, could be Info, Gauge, StateSet
+                type: Info
+                info: 
+                  # Key-Value pair for the label to add to metric name and the path for capturing the value
+                  labelsFromPath:    
+                    # "version" will be the label for the metric name "kube_pxc_info" with the value derived from the path "spec.crVersion" of the Custom Resource
+                    version: [spec,crVersion]
+            - name: kube_pxc_size
+              help: "Desired size for the PXC cluster"
+              each:
+                type: Gauge
+                gauge:
+                  # Path written in seperate lines for human friendly reading
+                  path: 
+                  - spec
+                  - pxc
+                  - size
+            - name: kube_pxc_status_state
+              help: "State of PXC Cluster"
+              each:
+                type: StateSet
+                stateSet:
+                  labelName: state
+                  path: [status,state]
+                  list: [unknown,ready,initializing,error,paused]           
