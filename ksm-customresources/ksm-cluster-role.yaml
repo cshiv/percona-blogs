@@ -112,7 +112,7 @@ rules:
   - customresourcedefinitions
   verbs:
   - list
-  - watch
+  - watch    
 - apiGroups:
   - pxc.percona.com
   resources:

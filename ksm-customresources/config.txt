@@ -1,11 +1,4 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: customresource-config-ksm
-data:
-  config: |
-    kind: CustomResourceStateMetrics
-    spec:
+   spec:
       resources:
         - groupVersionKind:
             # Group as per the definition of CRD(https://github.com/percona/percona-xtradb-cluster-operator/blob/43636fba46ffc331326359c135894b3c3eb84d05/deploy/crd.yaml#L457)             
@@ -26,7 +19,7 @@ data:
                 info: 
                   # Key-Value pair for the label to add to metric name and the path for capturing the value
                   labelsFromPath:    
-                    # "version" will be the label for the metric name "kube_pxc_info" with the value derived from the path "spec.crVersion" of the Custom Resource
+                    # "version" will be the label for the metric name "kube_customresource_pxc_info" with the value derived from the path "spec.crVersion" of the Custom Resource
                     version: [spec,crVersion]
             - name: pxc_size
               help: "Desired size for the PXC cluster"
@@ -45,4 +38,5 @@ data:
                 stateSet:
                   labelName: state
                   path: [status,state]
-                  list: [unknown,ready,initializing,error,paused]           
+                  list: [unknown,ready,initializing,error,paused] 
+
