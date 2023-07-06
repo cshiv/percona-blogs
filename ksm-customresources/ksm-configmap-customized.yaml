@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customresource-config-ksm
+data:
+  config: |
+    kind: CustomResourceStateMetrics
+    spec:
+      resources:
+        - groupVersionKind:
+            group: pxc.percona.com
+            version: v1
+            kind: PerconaXtraDBCluster
+          labelsFromPath:
+            name: [metadata,name]
+            namespace: [metadata,namespace]
+          metricNamePrefix: kube_pxc        
+          metrics:
+            - name: info
+              help: "Information of PXC cluster on k8s"
+              each:
+                type: Info
+                info: 
+                  labelsFromPath:    
+                    version: [spec,crVersion]
+            - name: size
+              help: "Desired size for the PXC cluster"
+              each:
+                type: Gauge
+                gauge:
+                  path: 
+                  - spec
+                  - pxc
+                  - size
+            - name: status_state
+              help: "State of PXC Cluster"
+              each:
+                type: StateSet
+                stateSet:
+                  labelName: state
+                  path: [status,state]
+                  list: [unknown,ready,initializing,error,paused]           
