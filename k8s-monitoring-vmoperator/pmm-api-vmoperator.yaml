@@ -4,4 +4,5 @@ data:
 kind: Secret
 metadata:
   name: pmm-token-vmoperator
+  #namespace: default
 type: Opaque
