@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  api_key: <Replace with base64 encoded API Key(echo -n <API-KEY> | base64 --wrap=0)>
+kind: Secret
+metadata:
+  name: pmm-token-vmoperator
+type: Opaque
