@@ -95,7 +95,8 @@ externalVM:
     #   name: dbaas-read-access-token
     #   key: bearerToken
   write:
-    url: "http://52.91.190.101//victoriametrics/api/v1/write"
+    # Replace PMM-SERVER-URL with valid URL of PMM Server
+    url: "https://<PMM-SERVER-URL>//victoriametrics/api/v1/write"
     bearerTokenSecret:
       name: pmm-token-vmoperator
       key: api_key
@@ -612,7 +613,7 @@ vmagent:
 #################################################
 # Grafana dependency chart configuration. For possible values refer to https://github.com/grafana/helm-charts/tree/main/charts/grafana#configuration
 grafana:
-  enabled: true
+  enabled: false
   ## all values for grafana helm chart can be specified here
   sidecar:
     datasources:
@@ -717,7 +718,7 @@ grafana:
 
 # prometheus-node-exporter dependency chart configuration. For possible values refer to https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-node-exporter/values.yaml
 prometheus-node-exporter:
-  enabled: true
+  enabled: false
 
   ## all values for prometheus-node-exporter helm chart can be specified here
   podLabels:
