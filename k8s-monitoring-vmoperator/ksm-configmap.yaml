@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: customresource-config-ksm
-  namespace: default
+  #namespace: default
 data:
   config: |
     kind: CustomResourceStateMetrics
