@@ -745,6 +745,8 @@ prometheus-node-exporter:
               regex: "/var/lib/kubelet/pods.+"
 # kube-state-metrics dependency chart configuration. For possible values refer to https://github.com/kubernetes/kube-state-metrics/blob/master/charts/kube-state-metrics/values.yaml
 kube-state-metrics:
+  image:
+    tag: "v2.9.2"
   enabled: true
   ## all values for kube-state-metrics helm chart can be specified here  
   ## Customizaing kube-state-metrics installation for scraping Custom resources related to Percona Operators
@@ -761,6 +763,14 @@ kube-state-metrics:
     name: cr-config  
   rbac: 
     extraRules:
+    - apiGroups:
+      - apiextensions.k8s.io
+      resources:
+      - customresourcedefinitions
+      verbs:
+      - get
+      - list
+      - watch       
     - apiGroups:
       - pxc.percona.com
       resources:
