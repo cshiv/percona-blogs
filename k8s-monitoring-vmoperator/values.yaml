@@ -798,7 +798,7 @@ kube-state-metrics:
       - list
       - watch
     - apiGroups:
-      - pg.percona.com
+      - pgv2.percona.com
       resources:
       - perconapgbackups/status
       - perconapgclusters/status
@@ -806,10 +806,6 @@ kube-state-metrics:
       - perconapgclusters
       - perconapgrestores
       - perconapgbackups
-      - pgclusters
-      - pgpolicies
-      - pgreplicas
-      - pgtasks
       verbs:
       - get
       - list
