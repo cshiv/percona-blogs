@@ -569,7 +569,7 @@ vmagent:
       tag: v1.91.3
     scrapeInterval: 25s
     externalLabels:
-      cluster: cluster-name
+      k8s_cluster_id: cluster-name
     extraArgs:
       promscrape.streamParse: "true"
   ingress:
