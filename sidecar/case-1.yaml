@@ -16,7 +16,7 @@ spec:
   initContainers:
   - args:
     - -c
-    - echo "Init Container print `date`"; sleep 5
+    - echo "Init Container at `date`"; sleep 5
     command:
     - /bin/sh
     image: alpine
