@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-pod
+        
+spec:
+  containers:
+  - args:
+    - -c
+    - while true; do echo "Main Container at `date`"; sleep 5;done
+    command:
+    - /bin/sh
+    image: alpine
+    name: main
+
+  initContainers:
+  - args:
+    - -c
+    - echo "Init Container print `date`"; sleep 5
+    command:
+    - /bin/sh
+    image: alpine
+    name: init
